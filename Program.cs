@@ -41,3 +41,6 @@ namespace CybersecurityAwarenessChatbot
 
 // 11.GeeksforGeeks, 2023. C++ Pointers. [online] GeeksforGeeks. Available at: https://www.geeksforgeeks.org/cpp-pointers/ [Accessed 26 May 2025].
 
+// YOUTUBE LINK FOR VIDEO: https://www.youtube.com/watch?v=n6d5JR7T8yE
+
+
