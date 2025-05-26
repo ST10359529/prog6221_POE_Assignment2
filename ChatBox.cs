@@ -6,7 +6,7 @@ namespace CybersecurityAwarenessChatbot
 {
     class ChatBox
     {
-        // Static responses for fixed user inputs
+        // responses for fixed user inputs
         public Dictionary<string, string> StaticResponses { get; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
             { "hello", "Hello!" },
@@ -15,7 +15,7 @@ namespace CybersecurityAwarenessChatbot
             { "what is your purpose", "My purpose is to educate you about cybersecurity and help you avoid online threats and hacking." }
         };
 
-        // Dictionary to map keywords (topics) to dynamic responses
+        
         private readonly Dictionary<string, Action<string>> dynamicResponses;
 
         // Stores topics the user has shown interest in
@@ -23,7 +23,7 @@ namespace CybersecurityAwarenessChatbot
 
         public ChatBox()
         {
-            // Initialize dynamic response actions for different cybersecurity topics
+            // response actions for different cybersecurity topics
             dynamicResponses = new Dictionary<string, Action<string>>(StringComparer.OrdinalIgnoreCase)
             {
                 { "password", (sentiment) => GiveRandomPasswordTip(sentiment) },
@@ -46,10 +46,9 @@ namespace CybersecurityAwarenessChatbot
                 Console.ResetColor();
 
                 Console.ForegroundColor = ConsoleColor.Green;
-                string userInput = Console.ReadLine().ToLower(); // Read and normalize input
+                string userInput = Console.ReadLine().ToLower(); 
                 Console.ResetColor();
 
-                // Handle different user inputs
                 if (string.IsNullOrWhiteSpace(userInput))
                 {
                     PrintChatbotResponse("I didn't quite understand that. Could you rephrase?");
@@ -61,19 +60,19 @@ namespace CybersecurityAwarenessChatbot
                 }
                 else if (userInput == "recall")
                 {
-                    RecallUserInterests(); // Show remembered interests
+                    RecallUserInterests(); // Shows remembered interests
                 }
                 else
                 {
-                    RespondToUser(userInput); // Handle general user queries
+                    RespondToUser(userInput); 
                 }
             }
         }
 
-        // Responds to both static and dynamic user input
+        
         private void RespondToUser(string input)
         {
-            // Check if input matches any static responses
+            
             foreach (var pair in StaticResponses)
             {
                 if (input.Contains(pair.Key))
@@ -83,10 +82,10 @@ namespace CybersecurityAwarenessChatbot
                 }
             }
 
-            // Detect user sentiment from input
+            // Detects user sentiment from input
             string detectedSentiment = DetectSentiment(input);
 
-            // Check for dynamic keyword and respond accordingly
+            // Checks for keyword and respond accordingly
             foreach (var pair in dynamicResponses)
             {
                 if (input.Contains(pair.Key))
@@ -98,7 +97,7 @@ namespace CybersecurityAwarenessChatbot
                         PrintChatbotResponse($"Great! I'll remember that you're interested in {pair.Key}.");
                     }
 
-                    // Invoke the appropriate dynamic response
+                    
                     pair.Value.Invoke(detectedSentiment);
                     return;
                 }
@@ -142,7 +141,7 @@ namespace CybersecurityAwarenessChatbot
             }
         }
 
-        // Helper to display chatbot messages
+       
         private void PrintChatbotResponse(string message)
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -161,7 +160,7 @@ namespace CybersecurityAwarenessChatbot
             Console.WriteLine();
         }
 
-        // Topic: Password tips
+        //  Password tips
         private void GiveRandomPasswordTip(string sentiment)
         {
             List<string> passwordTips = new List<string>
@@ -179,7 +178,7 @@ namespace CybersecurityAwarenessChatbot
             PrintChatbotResponse(GetRandomTip(passwordTips));
         }
 
-        // Topic: Phishing tips
+        // Phishing tips
         private void GiveRandomPhishingTip(string sentiment)
         {
             List<string> phishingTips = new List<string>
@@ -197,7 +196,7 @@ namespace CybersecurityAwarenessChatbot
             PrintChatbotResponse(GetRandomTip(phishingTips));
         }
 
-        // Topic: Privacy tips
+        //  Privacy tips
         private void GiveRandomPrivacyTip(string sentiment)
         {
             List<string> privacyTips = new List<string>
@@ -215,7 +214,7 @@ namespace CybersecurityAwarenessChatbot
             PrintChatbotResponse(GetRandomTip(privacyTips));
         }
 
-        // Topic: Scam/scamming tips
+        // Scam/scamming tips
         private void GiveRandomScamTip(string sentiment)
         {
             List<string> scamTips = new List<string>
@@ -233,7 +232,7 @@ namespace CybersecurityAwarenessChatbot
             PrintChatbotResponse(GetRandomTip(scamTips));
         }
 
-        // Topic: Safe browsing tips
+        //  Safe browsing tips
         private void GiveRandomSafeBrowsingTip(string sentiment)
         {
             List<string> browsingTips = new List<string>
@@ -258,7 +257,7 @@ namespace CybersecurityAwarenessChatbot
             return tips[rand.Next(tips.Count)];
         }
 
-        // Prints a tailored message based on detected sentiment and topic
+        
         private void PrintSentimentIntro(string sentiment, string topic)
         {
             switch (sentiment)
@@ -273,7 +272,7 @@ namespace CybersecurityAwarenessChatbot
                     PrintChatbotResponse($"Curiosity is great! Let's explore more about {topic} together.");
                     break;
                 default:
-                    // Only give this response if the user has expressed interest before
+                   
                     if (userInterests.Contains(topic))
                         PrintChatbotResponse($"Since you're interested in {topic}, here's a tip: ");
                     break;
